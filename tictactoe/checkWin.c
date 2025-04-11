@@ -1,10 +1,10 @@
 #include "game.h"
 
-#define WINCOMBOS 8
-#define WINCELLS 3
-#define CELLRC 2
+#define WIN_COMBOS 8
+#define WIN_CELLS 3
+#define WIN_CELL_ROW_COL 2
 
-int winCombos[WINCOMBOS][WINCELLS][CELLRC] = {
+int winCombos[WIN_COMBOS][WIN_CELLS][WIN_CELL_ROW_COL] = {
   {{0,0}, {0,1}, {0,2}},
   {{1,0}, {1,1}, {1,2}},
   {{2,0}, {2,1}, {2,2}},
@@ -17,10 +17,10 @@ int winCombos[WINCOMBOS][WINCELLS][CELLRC] = {
   {{0,2}, {1,1}, {2,0}},
 };
 
-int checkWin(char board[BOARDROWS][BOARDCOLS]) {
+int checkWin(char board[BOARD_ROWS][BOARD_COLS]) {
   int winRow;
   
-  for (winRow = 0; winRow < WINCOMBOS; winRow++) {
+  for (winRow = 0; winRow < WIN_COMBOS; winRow++) {
     
     int winCell0R = winCombos[winRow][0][0];
     int winCell0C = winCombos[winRow][0][1];

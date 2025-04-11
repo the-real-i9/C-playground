@@ -9,7 +9,7 @@
 #define PLAYER_X 'X'
 #define PLAYER_O 'O'
 
-int checkWin(char board[BOARDROWS][BOARDCOLS]);
+int checkWin(char board[BOARD_ROWS][BOARD_COLS]);
 int cellInputIsValid(char cellInput[], char whosTurn);
 void extCellPlayed(int cell [2], char cellInput[]);
 
@@ -21,7 +21,7 @@ int main() {
 
   char winner = NO_WINNER_YET;
 
-  char board[BOARDROWS][BOARDCOLS] = {
+  char board[BOARD_ROWS][BOARD_COLS] = {
     {' ', ' ', ' '},
     {' ', ' ', ' '},
     {' ', ' ', ' '},
