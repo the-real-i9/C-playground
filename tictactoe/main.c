@@ -74,9 +74,9 @@ int main() {
     filledCells++;
   }
 
-  if (gameTerminated) {
+  if (gameTerminated)
     printf("\nGame terminated!\n");
-  } else if (winner == NO_WINNER_YET)
+  else if (winner == NO_WINNER_YET)
     printf("Draw Game!\n");
   else
     printf("🏆 Player %c wins! 🏆\n", winner);
