@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-
 #include "game.h"
 
 #define NO_WINNER_YET '0'
