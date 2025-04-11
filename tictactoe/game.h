@@ -1,0 +1,2 @@
+#define BOARDROWS 3
+#define BOARDCOLS 3
