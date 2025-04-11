@@ -1,7 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <string.h>
+
 
 #include "game.h"
 
@@ -14,6 +12,7 @@
 
 int checkWin(char board[BOARDROWS][BOARDCOLS]);
 int cellInputIsValid(char cellInput[], char whosTurn);
+void extCellPlayed(int cell [2], char cellInput[]);
 
 int main() {
   
@@ -49,15 +48,12 @@ int main() {
       continue;
     }
 
-    char rowInput = cellInput[0];
-    char colInput = cellInput[2];  
+    int cellPlayed[2];
 
-    /* start: extract row and col played */
-    char rowInputStr[2] = {rowInput, '\0'};
-    char colInputStr[2] = {colInput, '\0'};
-    int rowNum = atoi(rowInputStr);
-    int colNum = atoi(colInputStr);
-    /* end: extract row and col played */
+    extCellPlayed(cellPlayed, cellInput);
+
+    int rowNum = cellPlayed[CELL_ROW];
+    int colNum = cellPlayed[CELL_COL];
 
     if (board[rowNum][colNum] != ' ') {
       printf("Cell '%s' has been played!\n", cellInput);
@@ -84,7 +80,7 @@ int main() {
   } else if (winner == NO_WINNER_YET)
     printf("Draw Game!\n");
   else
-    printf("Player '%c' WINS!\n", winner);
+    printf("🏆 Player %c wins! 🏆\n", winner);
 
   return 0;
 }
