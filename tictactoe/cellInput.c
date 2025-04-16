@@ -33,14 +33,3 @@ int cellInputIsValid(char *cellInput, char whosTurn) {
 
   return 1;
 }
-
-void extCellPlayed(int cell [2], char *cellInput) {
-  char rowInput = cellInput[0];
-  char colInput = cellInput[2];  
-
-  char rowInputStr[2] = {rowInput, '\0'};
-  char colInputStr[2] = {colInput, '\0'};
-
-  cell[CELL_ROW] = atoi(rowInputStr);
-  cell[CELL_COL] = atoi(colInputStr);
-}

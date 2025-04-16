@@ -11,7 +11,6 @@
 
 int checkWin(char board[BOARD_ROWS][BOARD_COLS]);
 int cellInputIsValid(char *cellInput, char whosTurn);
-void extCellPlayed(int cell[2], char *cellInput);
 
 int main() {
   
@@ -47,12 +46,12 @@ int main() {
       continue;
     }
 
-    int cellPlayed[2];
+    // extract cell played
 
-    extCellPlayed(cellPlayed, cellInput); 
+    int rowNum;
+    int colNum;
 
-    int rowNum = cellPlayed[CELL_ROW];
-    int colNum = cellPlayed[CELL_COL];
+    sscanf(cellInput, "%d,%d", &rowNum, &colNum);
 
     if (!board[rowNum][colNum]) {
       printf("Invalid cell '%d,%d'! What's that?\n", rowNum, colNum);
