@@ -1,14 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "gostrings.h"
 
+int digitGt(char c) {
+  if (isdigit(c)) {
+    char numStr[] = {c, '\0'};
+    if (atoi(numStr) > 3)
+      return 1;
+  }
+
+  return 0;
+}
+
 int main() {
 
-  char str[] = "Hello World!";
-  char substr[] = "x";
+  char str[] = "5,4,3,2,1";
 
-  printf("%d\n", contains(str, substr));
+  int test = containsFunc(str, digitGt);
+
+  printf("%d\n", test);
 
   return 0;
 }
