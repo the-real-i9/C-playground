@@ -4,14 +4,14 @@
 
 #define NO_WINNER_YET '0'
 #define BOARD_CELLS 9
-#define MAX_CELL_INPUT 1000
+#define MAX_CELL_INPUT 4
 
 #define PLAYER_X 'X'
 #define PLAYER_O 'O'
 
 int checkWin(char board[BOARD_ROWS][BOARD_COLS]);
-int cellInputIsValid(char cellInput[], char whosTurn);
-void extCellPlayed(int cell [2], char cellInput[]);
+int cellInputIsValid(char *cellInput, char whosTurn);
+void extCellPlayed(int cell[2], char *cellInput);
 
 int main() {
   
@@ -36,7 +36,7 @@ int main() {
 
     char cellInput[MAX_CELL_INPUT];
 
-    fgets(cellInput, sizeof cellInput, stdin);
+    scanf("%s", cellInput);
 
     if (feof(stdin)) {
       gameTerminated = 1;
@@ -49,13 +49,18 @@ int main() {
 
     int cellPlayed[2];
 
-    extCellPlayed(cellPlayed, cellInput);
+    extCellPlayed(cellPlayed, cellInput); 
 
     int rowNum = cellPlayed[CELL_ROW];
     int colNum = cellPlayed[CELL_COL];
 
+    if (!board[rowNum][colNum]) {
+      printf("Invalid cell '%d,%d'! What's that?\n", rowNum, colNum);
+      continue;
+    }
+
     if (board[rowNum][colNum] != ' ') {
-      printf("Cell '%s' has been played!\n", cellInput);
+      printf("Cell '%d,%d' has been played!\n", rowNum, colNum);
       continue;
     }
 

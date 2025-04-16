@@ -4,18 +4,8 @@
 
 #include "game.h"
 
-int cellInputIsValid(char cellInput[], char whosTurn) {
+int cellInputIsValid(char *cellInput, char whosTurn) {
 
-  // strip new line from input
-  cellInput[strlen(cellInput)-1] = '\0';
-
-  /* start: check for invalid cell input patterns */
-  if (strlen(cellInput) == 0) {
-    printf("Play something '%c'?!\n", whosTurn);
-    return 0;
-  }
-
-  
   if (strlen(cellInput) != 3) {
     printf("Invalid cell input format %s. Valid format is: ROWNUM,COLNUM\n", cellInput);
     return 0;
@@ -44,7 +34,7 @@ int cellInputIsValid(char cellInput[], char whosTurn) {
   return 1;
 }
 
-void extCellPlayed(int cell [2], char cellInput[]) {
+void extCellPlayed(int cell [2], char *cellInput) {
   char rowInput = cellInput[0];
   char colInput = cellInput[2];  
 
