@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <strings.h>
 
 #include "gostrings.h"
 
@@ -16,7 +17,9 @@ int digitGt(char c) {
 
 int main() {
 
-  char str[] = "5,4,3,2,1";
+  char *plex[] = {"one", "two", "three"};
+
+  char *str = "5,4,3,2,1";
 
   int test = containsFunc(str, digitGt);
 
