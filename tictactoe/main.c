@@ -46,8 +46,7 @@ int main() {
       continue;
     }
 
-    // extract cell played
-
+    // extract cell (rowNum,col) played
     int rowNum;
     int colNum;
 
