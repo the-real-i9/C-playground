@@ -6,12 +6,9 @@
 int main() {
 
   char str[] = "Hello World!";
+  char substr[] = "x";
 
-  char theClone[sizeof str];
-
-  clone(theClone, str);
-
-  puts(theClone);
+  printf("%d\n", contains(str, substr));
 
   return 0;
 }
