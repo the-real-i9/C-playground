@@ -1,20 +1,25 @@
 #include <stdio.h>
 
-struct node {
-  int value;
-  struct node *next;
-};
+#include "sllist.h"
 
-struct list {
-  struct node *head;
-  struct node *tail;
-};
+
 
 int main() {
 
-  struct list myList;
+  struct sllist myList;
 
+  myList.length = 0;
+
+  struct node node1 = {5};
+  append(&myList, &node1);
   
+  struct node node2 = {7};
+  append(&myList, &node2);
+  
+  printf("%d\n", myList.head->value);
+  printf("%d\n", myList.head->next->value);
+
+  printf("%d\n", myList.length);
 
   return 0;
 }
