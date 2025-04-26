@@ -6,20 +6,18 @@
 
 int main() {
 
-  struct sllist myList;
+  struct sllist myList = {NULL, NULL, 0};
 
-  myList.length = 0;
-
-  struct node node1 = {5};
-  append(&myList, &node1);
+  append(&myList, 5);
   
-  struct node node2 = {7};
-  append(&myList, &node2);
+  append(&myList, 7);
   
   printf("%d\n", myList.head->value);
   printf("%d\n", myList.head->next->value);
 
   printf("%d\n", myList.length);
+
+  free_sllist(&myList);
 
   return 0;
 }
