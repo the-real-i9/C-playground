@@ -17,9 +17,9 @@ void free_sllist(struct sllist *list) {
   struct node *next;
 
   while (current != NULL) {
-      next = current->next;
-      free(current);
-      current = next;
+    next = current->next;
+    free(current);
+    current = next;
   }
 
   list->head = NULL;
@@ -43,7 +43,14 @@ void append(struct sllist *list, int value) {
     list->tail = newNode;
   }
 
-  // free(newNode);
-
   list->length = list->length > 0 ? list->length = list->length + 1 : 1;
+}
+
+void traverse(struct sllist *list) {
+  struct node *current = list->head;
+
+  while (current != NULL) {
+    printf("%d\n", current->value);
+    current = current->next;
+  }
 }

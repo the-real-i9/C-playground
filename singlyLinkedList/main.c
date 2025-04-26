@@ -2,18 +2,16 @@
 
 #include "sllist.h"
 
-
-
 int main() {
 
   struct sllist myList = {NULL, NULL, 0};
 
-  append(&myList, 5);
-  
+  append(&myList, 5);  
   append(&myList, 7);
+  append(&myList, 9);
+  append(&myList, 11);
   
-  printf("%d\n", myList.head->value);
-  printf("%d\n", myList.head->next->value);
+  traverse(&myList);
 
   printf("%d\n", myList.length);
 
