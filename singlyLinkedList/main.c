@@ -4,7 +4,7 @@
 
 int main() {
 
-  struct sllist myList = {NULL, NULL, 0};
+  Sllist myList = {NULL, NULL, 0};
 
   append(&myList, 5);  
   append(&myList, 7);

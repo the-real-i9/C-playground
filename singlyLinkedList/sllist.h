@@ -1,20 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct node {
+typedef struct node {
   int value;
   struct node *next;
-};
+} Node;
 
-struct sllist {
+typedef struct sllist {
   struct node *head;
   struct node *tail;
   int length;
-};
+} Sllist;
 
-void free_sllist(struct sllist *list) {
-  struct node *current = list->head;
-  struct node *next;
+void free_sllist(Sllist *list) {
+  Node *current = list->head;
+  Node *next;
 
   while (current != NULL) {
     next = current->next;
@@ -28,9 +28,9 @@ void free_sllist(struct sllist *list) {
 }
 
 
-void append(struct sllist *list, int value) {
+void append(Sllist *list, int value) {
 
-  struct node *newNode = malloc(sizeof(struct node));
+  Node *newNode = malloc(sizeof(Node));
   newNode->value = value;
   newNode->next = NULL;
 
@@ -46,8 +46,8 @@ void append(struct sllist *list, int value) {
   list->length = list->length > 0 ? list->length = list->length + 1 : 1;
 }
 
-void traverse(struct sllist *list) {
-  struct node *current = list->head;
+void traverse(Sllist *list) {
+  Node *current = list->head;
 
   while (current != NULL) {
     printf("%d\n", current->value);
