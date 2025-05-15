@@ -5,6 +5,7 @@ DyArray *newDyArray();
 void free_DyArray(DyArray *arr);
 void push(DyArray *arr, int item);
 void traverse(DyArray *arr);
+int pop(DyArray *arr);
 
 int main(int argc, char const *argv[]) {
   
@@ -26,6 +27,15 @@ int main(int argc, char const *argv[]) {
   push(myArray, 14);
   push(myArray, 15);
   push(myArray, 16);
+  pop(myArray);
+  pop(myArray);
+  pop(myArray);
+  pop(myArray);
+  pop(myArray);
+  pop(myArray);
+  pop(myArray);
+  pop(myArray);
+  pop(myArray);
 
   traverse(myArray);
 
