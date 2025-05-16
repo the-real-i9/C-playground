@@ -36,6 +36,14 @@ int main(int argc, char const *argv[]) {
   pop(myArray);
   pop(myArray);
   pop(myArray);
+  push(myArray, 1);
+  push(myArray, 2);
+  push(myArray, 3);
+  push(myArray, 4);
+  push(myArray, 5);
+  push(myArray, 6);
+  push(myArray, 7);
+  push(myArray, 8);
 
   traverse(myArray);
 
