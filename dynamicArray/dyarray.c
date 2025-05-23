@@ -49,7 +49,7 @@ static void resize(DyArray *arr, int newCap) {
 
 int at(DyArray *arr, int index) {
   if (index >= arr->size) {
-    fprintf(stderr, "index specified is out of bounds: in function at()");
+    fprintf(stderr, "error at at(): index specified is out of bounds\n");
     abort();
   }
 
@@ -57,7 +57,7 @@ int at(DyArray *arr, int index) {
 }
 
 void push(DyArray *arr, int item) {
-  if (arr->size + 1 == arr->cap) {
+  if (arr->size == arr->cap) {
     resize(arr, arr->cap * 2);
   }
 
@@ -68,7 +68,7 @@ void push(DyArray *arr, int item) {
 
 int pop(DyArray *arr) {
   if (!arr->size) {
-    fprintf(stderr, "calling pop() on an empty array");
+    fprintf(stderr, "error at pop(): array is empty\n");
     abort();
   }
 
@@ -81,6 +81,74 @@ int pop(DyArray *arr) {
   arr->size = arr->size - 1;
 
   return lastItem;
+}
+
+void insert(DyArray *arr, int index, int item) {
+  if (index > arr->size) {
+    fprintf(stderr, "error at insert(): index can't be greater than size of array\n");
+    abort();
+  }
+
+  if (arr->size == arr->cap) {
+    resize(arr, arr->cap * 2);
+  }
+
+  // if index = 0, and arr->size = 1
+
+  int targetIndex = index; // e.g. index 0
+  int promoteToNextIndex = arr->size; // e.g. index 1
+
+  while (promoteToNextIndex > targetIndex) { // index 1 > index 0
+    int toPromoteIndex = promoteToNextIndex - 1; // index 0
+
+    // item at index 0, is promoted to item at index 1
+    *(arr->data + promoteToNextIndex) = *(arr->data + toPromoteIndex);
+
+    // index 1 is now index 0, equal to target index
+    // the loop will stop, index 0 is not free to be occupied
+    promoteToNextIndex--;
+  }
+
+  *(arr->data + index) = item;
+
+  arr->size = arr->size + 1;
+}
+
+void prepend(DyArray *arr, int item) {
+  insert(arr, 0, item);
+}
+
+void delete(DyArray *arr, int index) {
+  if (!arr->size) {
+    fprintf(stderr, "error at delete(): array is empty\n");
+    abort();
+  }
+
+  if (index >= arr->size) {
+    fprintf(stderr, "error at delete(): index specified is out of bounds\n");
+    abort();
+  }
+
+  if (index == arr->size - 1) {
+    pop(arr);
+    return;
+  }
+
+  if (arr->size == arr->cap / 4) {
+    resize(arr, arr->cap / 2);
+  }
+
+  int demoteToPrevIndex = index;
+
+  while (demoteToPrevIndex < arr->size - 1) {
+    int toDemoteIndex = demoteToPrevIndex + 1;
+
+    *(arr->data + demoteToPrevIndex) = *(arr->data + toDemoteIndex);
+
+    demoteToPrevIndex++;
+  }
+
+  arr->size = arr->size - 1;
 }
 
 int size(DyArray *arr) {
