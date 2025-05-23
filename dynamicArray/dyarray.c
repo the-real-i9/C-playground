@@ -56,7 +56,7 @@ int at(DyArray *arr, int index) {
   return *(arr->data + index);
 }
 
-void push(DyArray *arr, int item) {
+void pushItem(DyArray *arr, int item) {
   if (arr->size == arr->cap) {
     resize(arr, arr->cap * 2);
   }
@@ -83,9 +83,9 @@ int pop(DyArray *arr) {
   return lastItem;
 }
 
-void insert(DyArray *arr, int index, int item) {
+void insertItem(DyArray *arr, int index, int item) {
   if (index > arr->size) {
-    fprintf(stderr, "error at insert(): index can't be greater than size of array\n");
+    fprintf(stderr, "error at insertItem(): index can't be greater than size of array\n");
     abort();
   }
 
@@ -114,18 +114,18 @@ void insert(DyArray *arr, int index, int item) {
   arr->size = arr->size + 1;
 }
 
-void prepend(DyArray *arr, int item) {
-  insert(arr, 0, item);
+void prependItem(DyArray *arr, int item) {
+  insertItem(arr, 0, item);
 }
 
-void delete(DyArray *arr, int index) {
+void deleteIndex(DyArray *arr, int index) {
   if (!arr->size) {
-    fprintf(stderr, "error at delete(): array is empty\n");
+    fprintf(stderr, "error at deleteIndex(): array is empty\n");
     abort();
   }
 
   if (index >= arr->size) {
-    fprintf(stderr, "error at delete(): index specified is out of bounds\n");
+    fprintf(stderr, "error at deleteIndex(): index specified is out of bounds\n");
     abort();
   }
 
@@ -149,6 +149,35 @@ void delete(DyArray *arr, int index) {
   }
 
   arr->size = arr->size - 1;
+}
+
+void removeItem(DyArray *arr, int item) {
+  int i = 0;
+
+  while (i < arr->size) {
+    if (*(arr->data + i) == item) {
+      deleteIndex(arr, i);
+      // if we delete an item at the current index, we must continue loop from there
+      // i-- followed by the usual i++ keeps the index the same
+      i--;
+    }
+
+    i++;
+  }
+}
+
+int findItem(DyArray *arr, int item) {
+  int i = 0;
+
+  while (i < arr->size) {
+    if (*(arr->data + i) == item) {
+      return i;
+    }
+
+    i++;
+  }
+
+  return -1;
 }
 
 int size(DyArray *arr) {
