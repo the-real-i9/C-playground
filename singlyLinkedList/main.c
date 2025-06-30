@@ -14,17 +14,20 @@ int main() {
   
   atexit(&cleanup);
 
-  append(myList, 5);  
-  append(myList, 7);
-  append(myList, 9);
-  append(myList, 11);
-  
+  pushFront(myList, 5);  
+  pushFront(myList, 7);
+  pushFront(myList, 9);
+  pushFront(myList, 11);
+  int poppedValue = popFront(myList);
+
   traverse(myList);
+  
+  printf("Size: %d\n", myList->size);
 
-  printf("Size -- %d\n", myList->size);
+  printf("Popped value: %d\n", poppedValue);
 
-  int targInd = 10;
-  printf("Value at index: %d -- %d\n", targInd, valueAt(myList, targInd));
+  int targInd = size(myList) - 1;
+  printf("Value at index[%d]: %d\n", targInd, valueAt(myList, targInd));
 
   return 0;
 }

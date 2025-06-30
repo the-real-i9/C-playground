@@ -45,13 +45,18 @@ int size(Sllist *list) {
 
 int empty(Sllist *list) {
   if (list->size)
-    return 1;
+    return 0;
 
-  return 0;
+  return 1;
 }
 
 int valueAt(Sllist *list, int index) {
-  if (index < 0 || index >= list->size) {
+  if (empty(list)) {
+    fputs("error: valueAt(): list is empty\n", stderr);
+    exit(1);
+  }
+
+  if (index < 0 || index >= size(list)) {
     fputs("error: valueAt(): index specified out of bounds\n", stderr);
     exit(1);
   }
@@ -67,7 +72,7 @@ int valueAt(Sllist *list, int index) {
   return current->value;
 }
 
-void append(Sllist *list, int value) {
+void pushFront(Sllist *list, int value) {
 
   Node *newNode = malloc(sizeof(Node));
   newNode->value = value;
@@ -82,7 +87,48 @@ void append(Sllist *list, int value) {
     list->tail = newNode;
   }
 
-  list->size = list->size > 0 ? list->size = list->size + 1 : 1;
+  list->size = list->size + 1;
+}
+
+int popFront(Sllist *list) {
+  if (empty(list)) {
+    fputs("error: popFront(): list is empty\n", stderr);
+    exit(1);
+  }
+
+  if (size(list) == 1) {
+    Node *frontNode = list->head;
+
+    int frontValue = frontNode->value;
+
+    free(frontNode);
+    list->head = NULL;
+    list->tail = NULL;
+    list->size = 0;
+
+    return frontValue;
+  }
+
+  Node *secondToFrontNode = list->head;
+
+  int i = 0;
+  while (i < list->size-2) {
+    secondToFrontNode = secondToFrontNode->next;
+
+    i++;
+  }
+
+  Node *frontNode = secondToFrontNode->next;
+
+  secondToFrontNode->next = NULL;
+
+  int frontValue = frontNode->value;
+
+  free(frontNode);
+
+  list->size = list->size - 1;
+
+  return frontValue;
 }
 
 void traverse(Sllist *list) {
