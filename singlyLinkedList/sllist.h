@@ -25,8 +25,19 @@ void free_sllist(Sllist *list) {
   list->head = NULL;
   list->tail = NULL;
   list->length = 0;
+
+  free(list);
 }
 
+Sllist *newSllist() {
+  Sllist *nsl = malloc(sizeof(Sllist));
+
+  nsl->head = NULL;
+  nsl->tail = NULL;
+  nsl->length = 0;
+
+  return nsl;
+}
 
 void append(Sllist *list, int value) {
 

@@ -4,18 +4,18 @@
 
 int main() {
 
-  Sllist myList = {NULL, NULL, 0};
+  Sllist *myList = newSllist();
 
-  append(&myList, 5);  
-  append(&myList, 7);
-  append(&myList, 9);
-  append(&myList, 11);
+  append(myList, 5);  
+  append(myList, 7);
+  append(myList, 9);
+  append(myList, 11);
   
-  traverse(&myList);
+  traverse(myList);
 
-  printf("%d\n", myList.length);
+  printf("%d\n", myList->length);
 
-  free_sllist(&myList);
+  free_sllist(myList);
 
   return 0;
 }
