@@ -148,6 +148,39 @@ void pushBack(Sllist *list, int value) {
   list->size = list->size + 1;
 }
 
+int popBack(Sllist *list) {
+  if (empty(list)) {
+    fputs("error: popBack(): list is empty\n", stderr);
+    exit(1);
+  }
+
+  if (size(list) == 1) {
+    Node *backNode = list->head;
+
+    int backValue = backNode->value;
+
+    free(backNode);
+    
+    list->head = NULL;
+    list->tail = NULL;
+    list->size = 0;
+
+    return backValue;
+  }
+
+  Node *backNode = list->head;
+
+  list->head = backNode->next;
+
+  int backValue = backNode->value;
+
+  free(backNode);
+
+  list->size = list->size - 1;
+
+  return backValue;
+}
+
 void traverse(Sllist *list) {
   Node *current = list->head;
 

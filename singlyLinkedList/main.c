@@ -18,13 +18,15 @@ int main() {
   pushFront(myList, 7);
   pushFront(myList, 9);
   pushFront(myList, 11);
-  int poppedValue = popFront(myList);
+  int poppedFrontValue = popFront(myList);
+  int poppedBackValue = popBack(myList);
 
   traverse(myList);
   
   printf("Size: %d\n", myList->size);
 
-  printf("Popped value: %d\n", poppedValue);
+  printf("Popped front value: %d\n", poppedFrontValue);
+  printf("Popped back value: %d\n", poppedBackValue);
 
   int targInd = size(myList) - 1;
   printf("Value at index[%d]: %d\n", targInd, valueAt(myList, targInd));
