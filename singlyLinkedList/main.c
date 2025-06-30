@@ -2,9 +2,15 @@
 
 #include "sllist.h"
 
+Sllist *myList;
+
+void cleanup() {
+  free_sllist(myList);
+}
+
 int main() {
 
-  Sllist *myList = newSllist();
+  myList = newSllist();
 
   append(myList, 5);  
   append(myList, 7);
@@ -13,9 +19,12 @@ int main() {
   
   traverse(myList);
 
-  printf("%d\n", myList->length);
+  printf("Size -- %d\n", myList->size);
 
-  free_sllist(myList);
+  int targInd = 10;
+  printf("Value at index: %d -- %d\n", targInd, valueAt(myList, targInd));
+
+  atexit(&cleanup);
 
   return 0;
 }

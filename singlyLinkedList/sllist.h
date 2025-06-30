@@ -9,7 +9,7 @@ typedef struct node {
 typedef struct sllist {
   struct node *head;
   struct node *tail;
-  int length;
+  int size;
 } Sllist;
 
 void free_sllist(Sllist *list) {
@@ -24,19 +24,49 @@ void free_sllist(Sllist *list) {
 
   list->head = NULL;
   list->tail = NULL;
-  list->length = 0;
+  list->size = 0;
 
   free(list);
+
+  printf("Finished\n");
+}
+
+int size(Sllist *list) {
+  return list->size;
+}
+
+int empty(Sllist *list) {
+  if (list->size)
+    return 1;
+
+  return 0;
+}
+
+int valueAt(Sllist *list, int index) {
+  if (index < 0 || index >= list->size) {
+    fputs("error: index specified out of bounds\n", stderr);
+    exit(1);
+  }
+
+  Node *current = list->head;
+
+  int i = 0;
+  while (i < index) {
+    current = current->next;
+    i++;
+  }
+
+  return current->value;
 }
 
 Sllist *newSllist() {
-  Sllist *nsl = malloc(sizeof(Sllist));
+  Sllist *list = malloc(sizeof(Sllist));
 
-  nsl->head = NULL;
-  nsl->tail = NULL;
-  nsl->length = 0;
+  list->head = NULL;
+  list->tail = NULL;
+  list->size = 0;
 
-  return nsl;
+  return list;
 }
 
 void append(Sllist *list, int value) {
@@ -54,7 +84,7 @@ void append(Sllist *list, int value) {
     list->tail = newNode;
   }
 
-  list->length = list->length > 0 ? list->length = list->length + 1 : 1;
+  list->size = list->size > 0 ? list->size = list->size + 1 : 1;
 }
 
 void traverse(Sllist *list) {
@@ -65,3 +95,4 @@ void traverse(Sllist *list) {
     current = current->next;
   }
 }
+
