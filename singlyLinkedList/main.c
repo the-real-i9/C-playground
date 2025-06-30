@@ -5,12 +5,14 @@
 Sllist *myList;
 
 void cleanup() {
-  free_sllist(myList);
+  freeSllist(myList);
 }
 
 int main() {
-
+  
   myList = newSllist();
+  
+  atexit(&cleanup);
 
   append(myList, 5);  
   append(myList, 7);
@@ -23,8 +25,6 @@ int main() {
 
   int targInd = 10;
   printf("Value at index: %d -- %d\n", targInd, valueAt(myList, targInd));
-
-  atexit(&cleanup);
 
   return 0;
 }

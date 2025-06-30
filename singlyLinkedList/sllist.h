@@ -12,7 +12,17 @@ typedef struct sllist {
   int size;
 } Sllist;
 
-void free_sllist(Sllist *list) {
+Sllist *newSllist() {
+  Sllist *list = malloc(sizeof(Sllist));
+
+  list->head = NULL;
+  list->tail = NULL;
+  list->size = 0;
+
+  return list;
+}
+
+void freeSllist(Sllist *list) {
   Node *current = list->head;
   Node *next;
 
@@ -27,8 +37,6 @@ void free_sllist(Sllist *list) {
   list->size = 0;
 
   free(list);
-
-  printf("Finished\n");
 }
 
 int size(Sllist *list) {
@@ -44,7 +52,7 @@ int empty(Sllist *list) {
 
 int valueAt(Sllist *list, int index) {
   if (index < 0 || index >= list->size) {
-    fputs("error: index specified out of bounds\n", stderr);
+    fputs("error: valueAt(): index specified out of bounds\n", stderr);
     exit(1);
   }
 
@@ -57,16 +65,6 @@ int valueAt(Sllist *list, int index) {
   }
 
   return current->value;
-}
-
-Sllist *newSllist() {
-  Sllist *list = malloc(sizeof(Sllist));
-
-  list->head = NULL;
-  list->tail = NULL;
-  list->size = 0;
-
-  return list;
 }
 
 void append(Sllist *list, int value) {
