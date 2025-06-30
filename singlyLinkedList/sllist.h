@@ -131,6 +131,23 @@ int popFront(Sllist *list) {
   return frontValue;
 }
 
+void pushBack(Sllist *list, int value) {
+
+  Node *newNode = malloc(sizeof(Node));
+  newNode->value = value;
+  newNode->next = NULL;
+
+  if (list->head == NULL) {
+    list->head = newNode;
+    list->tail = newNode;
+  } else {
+    newNode->next = list->head;
+    list->head = newNode;
+  }
+
+  list->size = list->size + 1;
+}
+
 void traverse(Sllist *list) {
   Node *current = list->head;
 
