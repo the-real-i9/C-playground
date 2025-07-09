@@ -17,13 +17,14 @@ int main() {
   pushBack(myList, (any_t)(__int64_t) 2);
   pushBack(myList, (any_t)(__int64_t) 4);
   pushBack(myList, (any_t)(__int64_t) 6);
-  pushBack(myList, (any_t)(__int64_t) 8);
+  pushBack(myList, (any_t)(__int64_t) 9);
   __int64_t poppedBackValue = (__int64_t) popBack(myList);
   __int64_t poppedFrontValue = (__int64_t) popFront(myList);
 
+  insert(myList, 2, (any_t)(__int64_t) 7);
   insert(myList, 1, (any_t)(__int64_t) 5);
+  insert(myList, size(myList), (any_t)(__int64_t) 8);
   insert(myList, 0, (any_t)(__int64_t) 3);
-  insert(myList, size(myList), (any_t)(__int64_t) 7);
   
 
   // traverse myList;
