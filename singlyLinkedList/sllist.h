@@ -1,19 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef void * any_t;
+
 typedef struct node {
-  int value;
+  any_t value;
   struct node *next;
-} Node;
+} node_t;
 
 typedef struct sllist {
-  struct node *head;
-  struct node *tail;
+  node_t *head;
+  node_t *tail;
   int size;
-} Sllist;
+} sllist_t;
 
-Sllist *newSllist() {
-  Sllist *list = malloc(sizeof(Sllist));
+sllist_t *newSllist() {
+  sllist_t *list = malloc(sizeof(sllist_t));
 
   list->head = NULL;
   list->tail = NULL;
@@ -22,9 +24,17 @@ Sllist *newSllist() {
   return list;
 }
 
-void freeSllist(Sllist *list) {
-  Node *current = list->head;
-  Node *next;
+node_t *newNode(any_t value) {
+  node_t *node = malloc(sizeof(node_t));
+  node->value = value;
+  node->next = NULL;
+
+  return node;
+}
+
+void freeSllist(sllist_t *list) {
+  node_t *current = list->head;
+  node_t *next;
 
   while (current != NULL) {
     next = current->next;
@@ -39,18 +49,18 @@ void freeSllist(Sllist *list) {
   free(list);
 }
 
-int size(Sllist *list) {
+int size(sllist_t *list) {
   return list->size;
 }
 
-int empty(Sllist *list) {
-  if (list->size)
+int empty(sllist_t *list) {
+  if (size(list))
     return 0;
 
   return 1;
 }
 
-int valueAt(Sllist *list, int index) {
+any_t valueAt(sllist_t *list, int index) {
   if (empty(list)) {
     fputs("error: valueAt(): list is empty\n", stderr);
     exit(1);
@@ -61,7 +71,7 @@ int valueAt(Sllist *list, int index) {
     exit(1);
   }
 
-  Node *current = list->head;
+  node_t *current = list->head;
 
   int i = 0;
   while (i < index) {
@@ -72,36 +82,34 @@ int valueAt(Sllist *list, int index) {
   return current->value;
 }
 
-void pushFront(Sllist *list, int value) {
+void pushFront(sllist_t *list, any_t value) {
 
-  Node *newNode = malloc(sizeof(Node));
-  newNode->value = value;
-  newNode->next = NULL;
+  node_t *node = newNode(value);
 
-  // if list's empty
   if (list->head == NULL) {
-    list->head = newNode;
-    list->tail = newNode;
+    list->head = node;
+    list->tail = node;
   } else {
-    list->tail->next = newNode;
-    list->tail = newNode;
+    node->next = list->head;
+    list->head = node;
   }
 
-  list->size = list->size + 1;
+  list->size = size(list) + 1;
 }
 
-int popFront(Sllist *list) {
+any_t popFront(sllist_t *list) {
   if (empty(list)) {
     fputs("error: popFront(): list is empty\n", stderr);
     exit(1);
   }
 
   if (size(list) == 1) {
-    Node *frontNode = list->head;
+    node_t *frontNode = list->head;
 
-    int frontValue = frontNode->value;
+    any_t frontValue = frontNode->value;
 
     free(frontNode);
+    
     list->head = NULL;
     list->tail = NULL;
     list->size = 0;
@@ -109,58 +117,47 @@ int popFront(Sllist *list) {
     return frontValue;
   }
 
-  Node *secondToFrontNode = list->head;
+  node_t *frontNode = list->head;
 
-  int i = 0;
-  while (i < list->size-2) {
-    secondToFrontNode = secondToFrontNode->next;
+  list->head = frontNode->next;
 
-    i++;
-  }
-
-  Node *frontNode = secondToFrontNode->next;
-
-  secondToFrontNode->next = NULL;
-
-  int frontValue = frontNode->value;
+  any_t frontValue = frontNode->value;
 
   free(frontNode);
 
-  list->size = list->size - 1;
+  list->size = size(list) - 1;
 
   return frontValue;
 }
 
-void pushBack(Sllist *list, int value) {
+void pushBack(sllist_t *list, any_t value) {
 
-  Node *newNode = malloc(sizeof(Node));
-  newNode->value = value;
-  newNode->next = NULL;
+  node_t *node = newNode(value);
 
+  // if list's empty
   if (list->head == NULL) {
-    list->head = newNode;
-    list->tail = newNode;
+    list->head = node;
+    list->tail = node;
   } else {
-    newNode->next = list->head;
-    list->head = newNode;
+    list->tail->next = node;
+    list->tail = node;
   }
 
-  list->size = list->size + 1;
+  list->size = size(list) + 1;
 }
 
-int popBack(Sllist *list) {
+any_t popBack(sllist_t *list) {
   if (empty(list)) {
     fputs("error: popBack(): list is empty\n", stderr);
     exit(1);
   }
 
   if (size(list) == 1) {
-    Node *backNode = list->head;
+    node_t *backNode = list->head;
 
-    int backValue = backNode->value;
+    any_t backValue = backNode->value;
 
     free(backNode);
-    
     list->head = NULL;
     list->tail = NULL;
     list->size = 0;
@@ -168,25 +165,87 @@ int popBack(Sllist *list) {
     return backValue;
   }
 
-  Node *backNode = list->head;
+  node_t *secondToBackNode = list->head;
 
-  list->head = backNode->next;
+  while (secondToBackNode->next->next != NULL) {
+    secondToBackNode = secondToBackNode->next;
 
-  int backValue = backNode->value;
+  }
 
-  free(backNode);
+  node_t *oldBackNode = secondToBackNode->next;
 
-  list->size = list->size - 1;
+  secondToBackNode->next = NULL;
 
-  return backValue;
+  list->tail = secondToBackNode;
+
+  any_t oldBackValue = oldBackNode->value;
+
+  free(oldBackNode);
+
+  list->size = size(list) - 1;
+
+  return oldBackValue;
 }
 
-void traverse(Sllist *list) {
-  Node *current = list->head;
+any_t front(sllist_t *list) {
+  return list->head->value;
+}
 
-  while (current != NULL) {
-    printf("%d\n", current->value);
-    current = current->next;
+any_t back(sllist_t *list) {
+  return list->tail->value;
+}
+
+void insert(sllist_t *list, int index, any_t value) {
+  if (index > size(list)) {
+    fputs("error: insert(): sparsed list forbidden\n", stderr);
+    exit(1);
   }
+
+  if (index == size(list)) {
+    pushBack(list, value);
+
+    return;
+  }
+
+  if (index == 0) {
+    pushFront(list, value);
+
+    return;
+  }
+
+  node_t *node = newNode(value);
+
+  node_t *nodeBeforeIndex = list->head;
+  node_t *nodeAtIndex = list->head->next;
+
+  int i = 0;
+  while (i < index - 1) {
+    nodeBeforeIndex = nodeAtIndex;
+    nodeAtIndex = nodeBeforeIndex->next;
+
+    i++;
+  }
+
+  node->next = nodeAtIndex;
+  nodeBeforeIndex->next = node;
+
+  list->size = size(list) + 1;
+}
+
+any_t *toArray(sllist_t *list) {
+  any_t *arr = malloc(size(list) * sizeof(any_t));
+
+  node_t *current = list->head;
+
+  int i = 0;
+  while (current != NULL) {
+    *(arr + i) = current->value;
+
+    current = current->next;
+
+    i++;
+  }
+
+  return arr;
 }
 

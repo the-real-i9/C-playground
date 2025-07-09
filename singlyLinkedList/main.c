@@ -2,7 +2,7 @@
 
 #include "sllist.h"
 
-Sllist *myList;
+sllist_t *myList;
 
 void cleanup() {
   freeSllist(myList);
@@ -14,22 +14,36 @@ int main() {
   
   atexit(&cleanup);
 
-  pushFront(myList, 5);  
-  pushFront(myList, 7);
-  pushFront(myList, 9);
-  pushFront(myList, 11);
-  int poppedFrontValue = popFront(myList);
-  int poppedBackValue = popBack(myList);
+  pushBack(myList, (any_t)(__int64_t) 2);
+  pushBack(myList, (any_t)(__int64_t) 4);
+  pushBack(myList, (any_t)(__int64_t) 6);
+  pushBack(myList, (any_t)(__int64_t) 8);
+  __int64_t poppedBackValue = (__int64_t) popBack(myList);
+  __int64_t poppedFrontValue = (__int64_t) popFront(myList);
 
-  traverse(myList);
+  insert(myList, 1, (any_t)(__int64_t) 5);
+  insert(myList, 0, (any_t)(__int64_t) 3);
+  insert(myList, size(myList), (any_t)(__int64_t) 7);
   
-  printf("Size: %d\n", myList->size);
 
-  printf("Popped front value: %d\n", poppedFrontValue);
-  printf("Popped back value: %d\n", poppedBackValue);
+  // traverse myList;
+  
+  any_t *myListArr = toArray(myList);
+  int i = 0;
+  while (i < size(myList)) {
+    printf("%ld\n", (__int64_t) myListArr[i]);
+
+    i++;
+  }
+  free(myListArr);
+  
+  printf("Size: %d\n", size(myList));
+
+  printf("Popped back value: %ld\n", poppedBackValue);
+  printf("Popped front value: %ld\n", poppedFrontValue);
 
   int targInd = size(myList) - 1;
-  printf("Value at index[%d]: %d\n", targInd, valueAt(myList, targInd));
+  printf("Value at index[%d]: %ld\n", targInd, (__int64_t) valueAt(myList, targInd));
 
   return 0;
 }
