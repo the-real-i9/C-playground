@@ -197,7 +197,7 @@ any_t back(sllist_t *list) {
 
 void insert(sllist_t *list, int index, any_t value) {
   if (index > size(list)) {
-    fputs("error: insert(): sparsed list forbidden\n", stderr);
+    fputs("error: insert(): index out of bounds\n", stderr);
     exit(1);
   }
 
@@ -216,7 +216,7 @@ void insert(sllist_t *list, int index, any_t value) {
   node_t *node = newNode(value);
 
   node_t *nodeBeforeIndex = list->head;
-  node_t *nodeAtIndex = list->head->next;
+  node_t *nodeAtIndex = nodeBeforeIndex->next;
 
   int i = 0;
   while (i < index - 1) {
@@ -230,6 +230,53 @@ void insert(sllist_t *list, int index, any_t value) {
   nodeBeforeIndex->next = node;
 
   list->size = size(list) + 1;
+}
+
+void erase(sllist_t *list, int index) {
+  if (index > size(list)) {
+    fputs("error: insert(): index out of bounds\n", stderr);
+    exit(1);
+  }
+
+  if (index == size(list)) {
+    popBack(list);
+
+    return;
+  }
+
+  if (index == 0) {
+    popFront(list);
+
+    return;
+  }
+
+  node_t *nodeBeforeIndex = list->head;
+  node_t *nodeAtIndex = nodeBeforeIndex->next;
+
+  int i = 0;
+  while (i < index - 1) {
+    nodeBeforeIndex = nodeAtIndex;
+    nodeAtIndex = nodeBeforeIndex->next;
+
+    i++;
+  }
+
+  nodeBeforeIndex->next = nodeAtIndex->next;
+
+  free(nodeAtIndex);
+
+  list->size = size(list) - 1;
+}
+
+any_t valueAtEnd(sllist_t *list, int index) {
+  int resolvedIndex = (size(list) - index) - 1;
+
+  if (resolvedIndex < 0 || resolvedIndex >= size(list)) {
+    fputs("error: valueAtEnd(): index out of bounds\n", stderr);
+    exit(1);
+  }
+
+  return valueAt(list, resolvedIndex);
 }
 
 any_t *toArray(sllist_t *list) {

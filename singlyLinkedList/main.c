@@ -26,7 +26,7 @@ int main() {
   insert(myList, size(myList), (any_t)(__int64_t) 8);
   insert(myList, 0, (any_t)(__int64_t) 3);
   
-
+  erase(myList, 2);
   // traverse myList;
   
   any_t *myListArr = toArray(myList);
@@ -45,6 +45,9 @@ int main() {
 
   int targInd = size(myList) - 1;
   printf("Value at index[%d]: %ld\n", targInd, (__int64_t) valueAt(myList, targInd));
+
+  int targEndInd = 1;
+  printf("Value at end index[%d]: %ld\n", targEndInd, (__int64_t) valueAtEnd(myList, targEndInd));
 
   return 0;
 }
