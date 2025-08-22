@@ -18,8 +18,12 @@ int main() {
   pushBack(myList, (any_t)(__int64_t) 4);
   pushBack(myList, (any_t)(__int64_t) 6);
   pushBack(myList, (any_t)(__int64_t) 9);
+
   __int64_t poppedBackValue = (__int64_t) popBack(myList);
+  printf("Popped back value: %ld\n", poppedBackValue);
+
   __int64_t poppedFrontValue = (__int64_t) popFront(myList);
+  printf("Popped front value: %ld\n", poppedFrontValue);
 
   insert(myList, 2, (any_t)(__int64_t) 7);
   insert(myList, 1, (any_t)(__int64_t) 5);
@@ -27,8 +31,16 @@ int main() {
   insert(myList, 0, (any_t)(__int64_t) 3);
   
   erase(myList, 2);
-  // traverse myList;
   
+  printf("Size: %d\n", size(myList));
+
+  int targInd = size(myList) - 1;
+  printf("Value at index[%d]: %ld\n", targInd, (__int64_t) valueAt(myList, targInd));
+
+  int targEndInd = 1;
+  printf("Value at end index[%d]: %ld\n", targEndInd, (__int64_t) valueAtEnd(myList, targEndInd));
+
+  // traverse myList;
   any_t *myListArr = toArray(myList);
   int i = 0;
   while (i < size(myList)) {
@@ -37,17 +49,18 @@ int main() {
     i++;
   }
   free(myListArr);
-  
-  printf("Size: %d\n", size(myList));
 
-  printf("Popped back value: %ld\n", poppedBackValue);
-  printf("Popped front value: %ld\n", poppedFrontValue);
+  reverse(myList);
+  printf("***List Reversed***\n");
 
-  int targInd = size(myList) - 1;
-  printf("Value at index[%d]: %ld\n", targInd, (__int64_t) valueAt(myList, targInd));
+  any_t *myRevListArr = toArray(myList);
+  int j = 0;
+  while (j < size(myList)) {
+    printf("%ld\n", (__int64_t) myRevListArr[j]);
 
-  int targEndInd = 1;
-  printf("Value at end index[%d]: %ld\n", targEndInd, (__int64_t) valueAtEnd(myList, targEndInd));
+    j++;
+  }
+  free(myRevListArr);
 
   return 0;
 }

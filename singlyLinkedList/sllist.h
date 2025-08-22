@@ -269,7 +269,7 @@ void erase(sllist_t *list, int index) {
 }
 
 any_t valueAtEnd(sllist_t *list, int index) {
-  int resolvedIndex = (size(list) - index) - 1;
+  int resolvedIndex = (size(list) - 1) - index;
 
   if (resolvedIndex < 0 || resolvedIndex >= size(list)) {
     fputs("error: valueAtEnd(): index out of bounds\n", stderr);
@@ -277,6 +277,34 @@ any_t valueAtEnd(sllist_t *list, int index) {
   }
 
   return valueAt(list, resolvedIndex);
+}
+
+void reverse(sllist_t *list) {
+  node_t *travNode = list->head;
+
+  node_t *workNode;
+
+  int listSize = size(list);
+
+  int i = 0;
+  while (i < listSize) {
+    node_t *currNode = travNode;
+    node_t *nNode = newNode(currNode->value);
+    if (i > 0) {
+      nNode->next = workNode;
+    } else {
+      list->tail = nNode;
+    }
+    
+    workNode = nNode;
+    travNode = currNode->next;
+
+    free(currNode);
+
+    i++;
+  }
+  
+  list->head = workNode;
 }
 
 any_t *toArray(sllist_t *list) {
