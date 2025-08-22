@@ -307,6 +307,21 @@ void reverse(sllist_t *list) {
   list->head = workNode;
 }
 
+void removeValue(sllist_t *list, any_t value) {
+  node_t *currNode = list->head;
+
+  // this is just to establish the alrogithm. 
+  // you can't just test the equality of the "any" type, 
+  // as the underlying type is unknown
+  int i = 0;
+  while (i < size(list)) {
+    if (currNode->value == value) {
+      erase(list, i);
+      break;
+    }
+  }
+}
+
 any_t *toArray(sllist_t *list) {
   any_t *arr = malloc(size(list) * sizeof(any_t));
 
